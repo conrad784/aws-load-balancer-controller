@@ -116,6 +116,7 @@ func (d *acmCertDiscovery) loadAllCertificateARNs(ctx context.Context) ([]string
 	}
 	req := &acm.ListCertificatesInput{
 		CertificateStatuses: aws.StringSlice([]string{acm.CertificateStatusIssued}),
+		Includes:            &acm.Filters{KeyTypes: aws.StringSlice([]string{acm.KeyAlgorithmRsa4096, acm.KeyAlgorithmRsa2048})},
 	}
 	certSummaries, err := d.acmClient.ListCertificatesAsList(ctx, req)
 	if err != nil {
